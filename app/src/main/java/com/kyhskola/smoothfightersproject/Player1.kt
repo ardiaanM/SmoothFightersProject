@@ -9,13 +9,16 @@ class Player1 (var posX: Float, var posY: Float, var size: Float, var speedX: Fl
     val paint = Paint()
 
     fun draw (canvas: Canvas?){
-        canvas?.drawRect(posX,posY,size,speedX,paint)
+        canvas?.drawRect(posX,posY,size,10f,paint)
+        println("Hej")
     }
 
-    fun update() {
-        posX += speedX
-        posY += speedY
+
+    fun update(pos: Float) {
+        posX = pos-200
+        size = pos + 200
     }
+
 
 
 }

@@ -20,6 +20,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     var mainActivity = context as MainActivity
     var score = 0
     var mHolder: SurfaceHolder? = holder
+    var playerX = 100f
 
     init {
         if(mHolder != null){
@@ -53,7 +54,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
 
     fun update(){
         ball1.update()
-        player1.update()
+        player1.update(playerX)
     }
 
     fun draw(){
@@ -66,17 +67,13 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
-        ball1.posX = event!!.x
-        ball1.posY = event!!.y
-
-        player1.posY = event!!.y
+        playerX = event!!.x
         return true
     }
 
 
     private fun bounceBall(b1: Ball , p1: Player1){
         b1.speedY *= -1
-        p1.speedX *= -1
         ball1.paint.color = Color.YELLOW
     }
 
@@ -108,7 +105,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         while(running){
             update()
             draw()
-            intersects(ball1, player1)
+           // intersects(ball1, player1)
             ball1.checkBounds(bounds)
 
         }
