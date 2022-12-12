@@ -3,7 +3,7 @@ package com.kyhskola.smoothfightersproject
 import android.graphics.Canvas
 import android.graphics.Paint
 
-class Player1(var posX: Float, var posY: Float, var size: Float, var speedX: Float, var speedY: Float, val playerHeight: Float){
+class Player2 (var posX: Float, var posY: Float, var size: Float, var speedX: Float, var speedY: Float){
 
     val paint = Paint()
 
@@ -13,8 +13,8 @@ class Player1(var posX: Float, var posY: Float, var size: Float, var speedX: Flo
 
 
     fun update(pos: Float) {
-        posX = pos - 100
-        size = pos + 100
+        posX = pos - 200
+        size = pos + 200
     }
 
 

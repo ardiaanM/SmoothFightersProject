@@ -20,7 +20,8 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     var mainActivity = context as MainActivity
     var score = 0
     var mHolder: SurfaceHolder? = holder
-    var playerX = 100f
+    var playerX = 0f
+
 
     init {
         if(mHolder != null){
@@ -30,8 +31,8 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     }
 
     fun setup(){
-        ball1 = Ball(100f, 100f, 35f, 7f, 5f)
-        player1 = Player1(1000f,100f,50f,0f,0f)
+        ball1 = Ball(100f, 100f, 35f, 20f, 20f)
+        player1 = Player1(30f, 30f, 1f, 0f, 0f, 30f)
 
         ball1.paint.color = Color.BLACK
         player1.paint.color = Color.RED
@@ -55,6 +56,20 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     fun update(){
         ball1.update()
         player1.update(playerX)
+
+        // Check for collisions with the paddle
+        if ((ball1.posX < (player1.posX + player1.size)) && ((ball1.posX + ball1.size) > player1.posX) &&
+            (ball1.posY < player1.posY + player1.playerHeight) && ((ball1.posY + ball1.size) > player1.posY)
+        ) {
+
+            // Calculate new direction of the ball
+            ball1.speedY = -ball1.speedY
+
+            score++
+            mainActivity.updateText("score: $score")
+        }
+
+
     }
 
     fun draw(){
@@ -105,7 +120,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         while(running){
             update()
             draw()
-           // intersects(ball1, player1)
+            //intersects(ball1, player1)
             ball1.checkBounds(bounds)
 
         }
