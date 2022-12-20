@@ -8,9 +8,11 @@ class Ball(var posX: Float, var posY: Float, var size: Float, var speedX: Float,
 
     val paint = Paint()
 
+
     fun update(){
         posX += speedX
         posY += speedY
+
     }
 
     fun draw (canvas: Canvas?){
