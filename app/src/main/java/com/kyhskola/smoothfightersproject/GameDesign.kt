@@ -39,7 +39,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     fun setup(){
         ball1 = Ball(100f, 100f, 35f, 15f, 15f)
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
-        player2 = Player2(300f, 1795f, 1f, 1950f, 0f, 30f)
+        player2 = Player2(300f, 1795f, 400f, 10f, 1f, 30f)
 
 
         ball1.paint.color = Color.BLACK
@@ -65,44 +65,80 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     fun update(){
         ball1.update()
         player1.update(playerX)
-        player2.update(playerX2)
+       // player2.update(playerX2)
 
         //debug
         println("Ball position: (${ball1.posX}, ${ball1.posY})")
-        println("Player 1 position: (${player1.posX}, ${player1.posY})")
-        println("Player 2 position: (${player2.posX}, ${player2.posY})")
+        println("Player 1 position: (${player1.left}, ${player1.top})")
+        println("Player 2 position: (${player2.left}, ${player2.top})")
 
 
         // Check for collisions with player 1
-        if ((ball1.posX < (player1.posX + player1.size)) && ((ball1.posX + ball1.size) > player1.posX) &&
-            (ball1.posY < player1.posY + player1.playerHeight) && ((ball1.posY + ball1.size) > player1.posY)
+        if ((ball1.posX < (player1.left + player1.right)) && ((ball1.posX + ball1.size) > player1.left) &&
+            (ball1.posY < player1.top + player1.playerHeight) && ((ball1.posY + ball1.size) > player1.top)
         ) {
+
+            // Check if the ball is hitting the front side of the paddle
+            if (ball1.speedX < 0) {
+
+                // Increment the score
+                score++
+                mainActivity.updateText("score: $score")
+            }
+
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
-
-            score++
-            mainActivity.updateText("score: $score")
         }
+
+
 
         // Check for collisions with player 2
-        if ((ball1.posX < (player2.posX + player2.size)) && ((ball1.posX + ball1.size) > player2.posX) &&
-            (ball1.posY < player2.posY + player2.playerHeight) && ((ball1.posY + ball1.size) > player2.posY)
+        if ((ball1.posX < (player2.left + player2.right)) && ((ball1.posX + ball1.size) > player2.left) &&
+            (ball1.posY < player2.top + player2.playerHeight) && ((ball1.posY + ball1.size) > player2.top)
         ) {
+
+            // Check if the ball is hitting the front side of the paddle
+            if (ball1.speedX > 0) {
+
+                score++
+                mainActivity.updateText("score: $score")
+            }
+
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
-
-            score++
-            mainActivity.updateText("score: $score")
         }
+
+        /* //TODO - Hitta lösning på screenheight?
+        // Check if the ball has reached the top of the screen
+        if (ball1.posY < 0) {
+
+            // Resets the ball
+            ball1.posY = (screenHeight / 2).toFloat()
+            ball1.speedY = -ball1.speedY
+
+        }
+
+            if (ball1.posY + ball1.size > screenHeight) {
+            // Reset the ball to the center of the screen and reverse its direction
+            ball1.posY = (screenHeight / 2).toFloat()
+            ball1.speedY = -ball1.speedY
+
+        } */
+
+
 
         //bot som följer efter den lilla bollen.
-    // TODO - Fixa skitet.
-        /*if (ball1.posX > player2.posX) {
-            player2.posX += player2.speedX
-        } else if (ball1.posX < player2.posX) {
-            player2.posX -= player2.speedX
+    // TODO - Kolla om koden funkar när man implementerat paddlen.
+        if (ball1.posX > player2.left) {
+            player2.left += player2.speedX
+            player2.right += player2.speedX
+
+        } else if (ball1.posX < player2.left) {
+            player2.left -= player2.speedX
+            player2.right -= player2.speedX
         }
-         */
+
+
 
     }
 
@@ -118,12 +154,12 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         playerX = event!!.x
-        playerX2 = event!!.x
+        //playerX2 = event!!.x
         return true
     }
 
 
-    private fun bounceBall(b1: Ball , p1: Player1){
+    private fun bounceBall(b1: Ball){
         b1.speedY *= -1
         ball1.paint.color = Color.YELLOW
     }
