@@ -153,6 +153,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
 
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
+        ball1.startMoving()
         playerX = event!!.x
         //playerX2 = event!!.x
         return true

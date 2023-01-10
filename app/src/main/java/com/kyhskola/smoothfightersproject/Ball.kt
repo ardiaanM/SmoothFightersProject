@@ -4,33 +4,58 @@ import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
 
-class Ball(var posX: Float, var posY: Float, var size: Float, var speedX: Float, var speedY: Float) {
+
+class Ball(
+    var posX: Float,
+    var posY: Float,
+    var size: Float,
+    var speedX: Float,
+    var speedY: Float,
+) {
 
     val paint = Paint()
 
 
-    fun update(){
+    fun update() {
         posX += speedX
         posY += speedY
 
     }
 
-    fun draw (canvas: Canvas?){
-        canvas?.drawCircle(posX,posY,size,paint)
+    fun draw(canvas: Canvas?) {
+        canvas?.drawCircle(posX, posY, size, paint)
     }
 
-    fun checkBounds(bounds: Rect){
-        if (posX-size < bounds.left){
+    fun checkBounds(bounds: Rect) {
+        if (posX - size < bounds.left) {
             this.speedX *= -1
         }
-        if (posX+size > bounds.right){
+        if (posX + size > bounds.right) {
             this.speedX *= -1
         }
-        if (posY-size < bounds.top){
-            this.speedY *= -1
+        if (posY - size < bounds.top) {
+            this.posY = 900f
+            this.posX = 500f
+            this.speedX *= 0
+            this.speedY *= 0
         }
-        if (posY+size > bounds.bottom){
-            this.speedY *= -1
+        if (posY + size > bounds.bottom) {
+            this.posY = 900f
+            this.posX = 500f
+            this.speedX *= 0
+            this.speedY *= 0
+        }
+
+
+    }
+
+
+    fun startMoving() {
+        if (speedX == 0f && speedY == 0f) {
+            // Set ball's x-speed to a random value between -5 and 5
+            speedX = (Math.random().toFloat() * 10f) - (-5f)
+            // Set ball's y-speed to a random value between -5 and 5
+            speedY = (Math.random().toFloat() * 10f) - (-5f)
         }
     }
 }
