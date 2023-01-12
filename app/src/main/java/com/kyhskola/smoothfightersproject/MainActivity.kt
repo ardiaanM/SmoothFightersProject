@@ -29,5 +29,12 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun updateTextUpper(str: String){
+        runOnUiThread(Runnable {
+            binding.textViewUpper.text = str
+        })
+
+    }
+
 }
 

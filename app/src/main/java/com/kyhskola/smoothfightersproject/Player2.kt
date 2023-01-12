@@ -10,7 +10,7 @@ class Player2 (var left: Float, var top: Float, var right: Float, var speedX: Fl
 
 
     fun draw(canvas: Canvas?) {
-        canvas?.drawRect(left, 1795f, right, 1950f, paint)
+        canvas?.drawRect(left, top, right, 1950f, paint)
     }
 
 

@@ -27,6 +27,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     TODO - Hitta lösning.  */
     var displayMetrics = context.resources.displayMetrics
     var screenHeight = displayMetrics.heightPixels
+    var screenWidth = displayMetrics.widthPixels
 
 
     init {
@@ -37,9 +38,9 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     }
 
     fun setup(){
-        ball1 = Ball(100f, 100f, 35f, 15f, 15f)
+        ball1 = Ball(100f, 100f, 35f, 15f, 15f,this.context)
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
-        player2 = Player2(300f, 1795f, 400f, 10f, 1f, 30f)
+        player2 = Player2(300f, 1795f, 500f, 14f, 1f, 30f)
 
 
         ball1.paint.color = Color.BLACK
@@ -77,15 +78,6 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         if ((ball1.posX < (player1.left + player1.right)) && ((ball1.posX + ball1.size) > player1.left) &&
             (ball1.posY < player1.top + player1.playerHeight) && ((ball1.posY + ball1.size) > player1.top)
         ) {
-
-            // Check if the ball is hitting the front side of the paddle
-            if (ball1.speedX < 0) {
-
-                // Increment the score
-                score++
-                mainActivity.updateText("score: $score")
-            }
-
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
         }
@@ -96,14 +88,6 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         if ((ball1.posX < (player2.left + player2.right)) && ((ball1.posX + ball1.size) > player2.left) &&
             (ball1.posY < player2.top + player2.playerHeight) && ((ball1.posY + ball1.size) > player2.top)
         ) {
-
-            // Check if the ball is hitting the front side of the paddle
-            if (ball1.speedX > 0) {
-
-                score++
-                mainActivity.updateText("score: $score")
-            }
-
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
         }
@@ -183,7 +167,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     }
 
     override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {
-        bounds = Rect(0,0,width,height)
+        bounds = Rect(0,0,screenWidth,screenHeight)
         start()
     }
 
@@ -198,6 +182,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
             draw()
             //intersects(ball1, player1)
             ball1.checkBounds(bounds)
+            ball1.win()
 
 
         }
