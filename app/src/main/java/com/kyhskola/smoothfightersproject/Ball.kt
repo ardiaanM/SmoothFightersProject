@@ -39,11 +39,11 @@ class Ball(
         }
         if (posY - size < bounds.top) {
             this.posY = 900f
-            this.posX = 500f
+            this.posX = 700f
             this.speedX *= 0
             this.speedY *= 0
             scoreLower++
-            mainActivity.updateText("score: $scoreLower")
+            mainActivity.updateText("$scoreLower")
 
 
         }
@@ -53,7 +53,7 @@ class Ball(
             this.speedX *= 0
             this.speedY *= 0
             scoreUpper++
-            mainActivity.updateTextUpper("score: $scoreUpper")
+            mainActivity.updateTextUpper("$scoreUpper")
         }
 
 
@@ -70,9 +70,13 @@ class Ball(
     }
 
     fun win(){
-        if (scoreUpper == 5 || scoreLower == 5){
-            mainActivity.updateText("GAME OVER")
-            mainActivity.updateTextUpper("GAME OVER")
+        if (scoreUpper == 5 && scoreLower != 5){
+            mainActivity.updateText("You Lose!")
+            mainActivity.updateTextUpper("You Win!")
+        }
+        else if (scoreLower == 5 && scoreUpper != 5) {
+            mainActivity.updateText("You Win!")
+            mainActivity.updateTextUpper("You Lose!")
         }
     }
 }

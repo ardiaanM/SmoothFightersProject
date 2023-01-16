@@ -4,6 +4,7 @@ import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Rect
+import android.util.DisplayMetrics
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
@@ -23,11 +24,11 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     var playerX = 0f
     var playerX2 = 1f
 
-    /*Hittar skärmens höjd och bredd
-    TODO - Hitta lösning.  */
-    var displayMetrics = context.resources.displayMetrics
+
+    var displayMetrics: DisplayMetrics = context.resources.displayMetrics
     var screenHeight = displayMetrics.heightPixels
     var screenWidth = displayMetrics.widthPixels
+
 
 
     init {
@@ -42,11 +43,11 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
         player2 = Player2(300f, 1795f, 500f, 14f, 1f, 30f)
 
-
-        ball1.paint.color = Color.BLACK
+        ball1.paint.color = Color.WHITE
         player1.paint.color = Color.RED
-        player2.paint.color = Color.WHITE
+        player2.paint.color = Color.GREEN
     }
+
 
     fun start(){
         running = true
@@ -66,7 +67,6 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     fun update(){
         ball1.update()
         player1.update(playerX)
-       // player2.update(playerX2)
 
         //debug
         println("Ball position: (${ball1.posX}, ${ball1.posY})")
@@ -75,12 +75,13 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
 
 
         // Check for collisions with player 1
-        if ((ball1.posX < (player1.left + player1.right)) && ((ball1.posX + ball1.size) > player1.left) &&
+        if ((ball1.posX > player1.left) && (ball1.posX < player1.right) &&
             (ball1.posY < player1.top + player1.playerHeight) && ((ball1.posY + ball1.size) > player1.top)
         ) {
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
         }
+
 
 
 
@@ -92,27 +93,6 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
             ball1.speedY = -ball1.speedY
         }
 
-        /* //TODO - Hitta lösning på screenheight?
-        // Check if the ball has reached the top of the screen
-        if (ball1.posY < 0) {
-
-            // Resets the ball
-            ball1.posY = (screenHeight / 2).toFloat()
-            ball1.speedY = -ball1.speedY
-
-        }
-
-            if (ball1.posY + ball1.size > screenHeight) {
-            // Reset the ball to the center of the screen and reverse its direction
-            ball1.posY = (screenHeight / 2).toFloat()
-            ball1.speedY = -ball1.speedY
-
-        } */
-
-
-
-        //bot som följer efter den lilla bollen.
-    // TODO - Kolla om koden funkar när man implementerat paddlen.
         if (ball1.posX > player2.left) {
             player2.left += player2.speedX
             player2.right += player2.speedX
@@ -128,7 +108,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
 
     fun draw(){
         canvas = mHolder!!.lockCanvas()
-        canvas.drawColor(Color.BLUE)
+        canvas.drawColor(Color.BLACK)
         ball1.draw(canvas)
         player1.draw(canvas)
         player2.draw(canvas)
@@ -139,7 +119,6 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
 
         ball1.startMoving()
         playerX = event!!.x
-        //playerX2 = event!!.x
         return true
     }
 
@@ -148,18 +127,6 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         b1.speedY *= -1
         ball1.paint.color = Color.YELLOW
     }
-
-
-    // Math pow med intersects, används inte.
-   /* fun intersects(b1: Ball, p1: Player1){
-        if (Math.sqrt(Math.pow(b1.posX-p1.posX.toDouble(),2.0)+Math.pow(b1.posY-p1.posY.toDouble(), 2.0))<=b1.size+p1.size){
-           bounceBall(b1,p1)
-
-            score++
-            mainActivity.updateText("score: $score")
-        }
-    } */
-
 
 
     override fun surfaceCreated(p0: SurfaceHolder) {
@@ -180,7 +147,6 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         while(running){
             update()
             draw()
-            //intersects(ball1, player1)
             ball1.checkBounds(bounds)
             ball1.win()
 

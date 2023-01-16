@@ -17,9 +17,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-       supportFragmentManager.commit {
-           add(R.id.frame_content, GameFragment())
-       }
+        supportFragmentManager.commit {
+            add(R.id.frame_content, GameFragment())
+        }
     }
 
     fun updateText(str: String){
@@ -37,4 +37,3 @@ class MainActivity : AppCompatActivity() {
     }
 
 }
-
