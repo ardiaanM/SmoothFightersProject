@@ -1,7 +1,9 @@
 package com.kyhskola.smoothfightersproject
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Button
 import androidx.fragment.app.commit
 import com.kyhskola.smoothfightersproject.databinding.ActivityMainBinding
 
@@ -17,9 +19,17 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        supportFragmentManager.commit {
-            add(R.id.frame_content, GameFragment())
+        val gameMode = intent.getIntExtra("game_mode", 0)
+        if (gameMode == 1) {
+            supportFragmentManager.commit {
+                add(R.id.frame_content, GameFragment())
+            }
+        } else if (gameMode == 2) {
+            supportFragmentManager.commit {
+                add(R.id.frame_content, GameFragmentSurvive())
+            }
         }
+
     }
 
     fun updateText(str: String){
@@ -36,4 +46,16 @@ class MainActivity : AppCompatActivity() {
 
     }
 
+    fun updateTextLives(str: String){
+        runOnUiThread(Runnable {
+            binding.textViewUpper.text = str
+        })
+
+    }
+
+    fun updateTextScore(str: String){
+        runOnUiThread(Runnable {
+            binding.textView.text
+        })
+    }
 }
