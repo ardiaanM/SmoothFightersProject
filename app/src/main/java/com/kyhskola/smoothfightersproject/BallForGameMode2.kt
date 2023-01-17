@@ -5,6 +5,7 @@ import android.content.Intent
 import android.graphics.Canvas
 import android.graphics.Paint
 import android.graphics.Rect
+import android.util.DisplayMetrics
 import kotlin.math.min
 
 
@@ -20,7 +21,11 @@ class BallForGameMode2(
     val paint = Paint()
     var mainActivity = context as MainActivity
     var lives= 3
-    var minusLife = -1
+    var highscore = 0
+    var displayMetrics: DisplayMetrics = context.resources.displayMetrics
+    var screenHeight = displayMetrics.heightPixels
+    var screenWidth = displayMetrics.widthPixels
+    var mContext = context
 
     fun update() {
         posX += speedX
@@ -40,8 +45,8 @@ class BallForGameMode2(
             this.speedX *= -1
         }
         if (posY - size < bounds.top) {
-            this.posY = 900f
-            this.posX = 500f
+            this.posY = screenHeight/2f
+            this.posX = screenWidth/2f
             this.speedX *= 0
             this.speedY *= 0
 
@@ -50,7 +55,6 @@ class BallForGameMode2(
         }
         if (posY + size > bounds.bottom) {
             this.speedY *= -1
-
         }
 
 
@@ -70,9 +74,24 @@ class BallForGameMode2(
         if (lives == 0){
             mainActivity.updateText("GAME OVER")
             mainActivity.updateTextUpper("GAME OVER")
+            retrieveHighscore()
             val intent = Intent(mainActivity, StartMenu::class.java)
+            intent.putExtra("highscore", highscore)
             mainActivity.startActivity(intent)
         }
 
+    }
+
+    fun updateHighscore(newScore: Int) {
+        val sharedPref = mContext.getSharedPreferences("highscore", Context.MODE_PRIVATE)
+        val editor = sharedPref.edit()
+        editor.putInt("highscore", newScore)
+        editor.apply()
+    }
+
+    fun retrieveHighscore(): Int {
+        val sharedPref = this.mContext.getSharedPreferences("highscore", Context.MODE_PRIVATE)
+        highscore = sharedPref.getInt("highscore", 0)
+        return highscore
     }
 }

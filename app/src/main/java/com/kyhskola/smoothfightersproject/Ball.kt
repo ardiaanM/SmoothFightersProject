@@ -39,6 +39,7 @@ class Ball(
     }
 
     fun checkBounds(bounds: Rect) {
+        // check if the ball has hit any of the boundaries of the screen
         if (posX - size < bounds.left) {
             this.speedX *= -1
         }
@@ -71,13 +72,14 @@ class Ball(
     fun startMoving() {
         if (speedX == 0f && speedY == 0f) {
             // Set ball's x-speed to a random value between -5 and 5
-            speedX = (Math.random().toFloat() * 15f) - (-10f)
+            speedX = (Math.random().toFloat() * 15f) - (-5f)
             // Set ball's y-speed to a random value between -5 and 5
             speedY = (Math.random().toFloat() * 10f) - (-5f)
         }
     }
 
     fun win(){
+        // check if either player has reached 5 points
         if (scoreUpper == 5 && scoreLower != 5){
             mainActivity.updateText("You Lose!")
             mainActivity.updateTextUpper("You Win!")

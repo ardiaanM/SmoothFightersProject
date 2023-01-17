@@ -20,13 +20,17 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         val gameMode = intent.getIntExtra("game_mode", 0)
+
+        // If the game mode is 1, add the GameFragment to the activity
         if (gameMode == 1) {
             supportFragmentManager.commit {
                 add(R.id.frame_content, GameFragment())
             }
+            // If the game mode is 2, add the GameFragmentSurvive to the activity
         } else if (gameMode == 2) {
             supportFragmentManager.commit {
                 add(R.id.frame_content, GameFragmentSurvive())
+
             }
         }
 
@@ -53,9 +57,11 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun updateTextScore(str: String){
+    fun updateTextHighScore(str: String) {
         runOnUiThread(Runnable {
-            binding.textView.text
+            binding.textViewHighScore.text = str
+
         })
     }
+
 }

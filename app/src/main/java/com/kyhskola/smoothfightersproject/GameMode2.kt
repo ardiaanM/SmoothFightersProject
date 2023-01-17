@@ -9,11 +9,11 @@ import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.SurfaceView
 
-class GameMode2 (context: Context): SurfaceView(context), SurfaceHolder.Callback,Runnable{
+class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback, Runnable {
 
     private var thread: Thread? = null
     private var running = false
-    lateinit var canvas:Canvas
+    lateinit var canvas: Canvas
     private lateinit var surviveball: BallForGameMode2
     private lateinit var player1: Player1
     private var bounds = Rect()
@@ -21,7 +21,7 @@ class GameMode2 (context: Context): SurfaceView(context), SurfaceHolder.Callback
     var mHolder: SurfaceHolder? = holder
     var playerX = 0f
     var score = 0
-    var lives = 3
+    var highscore = 0
 
     var displayMetrics = context.resources.displayMetrics
     var screenHeight = displayMetrics.heightPixels
@@ -29,38 +29,44 @@ class GameMode2 (context: Context): SurfaceView(context), SurfaceHolder.Callback
 
 
     init {
-        if(mHolder != null){
+        if (mHolder != null) {
             mHolder?.addCallback(this)
         }
         setup()
     }
 
-    fun setup(){
-        surviveball = BallForGameMode2(100f, 100f, 35f, 15f, 15f,this.context)
+    fun setup() {
+        surviveball = BallForGameMode2(100f, 100f, 35f, 15f, 15f, this.context)
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
 
 
         surviveball.paint.color = Color.BLACK
         player1.paint.color = Color.RED
+        highscore = surviveball.retrieveHighscore()
+        if (highscore == null) {
+            mainActivity.updateTextHighScore("0")
+        } else {
+            mainActivity.updateTextHighScore(highscore.toString())
+        }
     }
 
-    fun start(){
+    fun start() {
         running = true
         thread = Thread(this)
         thread?.start()
         mainActivity.updateTextLives("3")
     }
 
-    fun stop(){
+    fun stop() {
         running = false
-        try{
+        try {
             thread?.join()
-        }catch (e:InterruptedException){
+        } catch (e: InterruptedException) {
             e.printStackTrace()
         }
     }
 
-    fun update(){
+    fun update() {
         surviveball.update()
         player1.update(playerX)
 
@@ -70,6 +76,25 @@ class GameMode2 (context: Context): SurfaceView(context), SurfaceHolder.Callback
 
 
         // Check for collisions with player 1
+        if ((surviveball.posX > player1.left) && (surviveball.posX < player1.right) &&
+            (surviveball.posY < player1.top + player1.playerHeight) && ((surviveball.posY + surviveball.size) > player1.top)
+        ) {
+            // Calculate new direction of the ball
+            surviveball.speedY = -surviveball.speedY
+
+            score++
+            mainActivity.updateText("Score: " + "$score")
+
+            surviveball.speedX += 1
+            surviveball.speedY += 1
+
+            if (score > highscore) {
+                highscore = score
+                surviveball.updateHighscore(highscore)
+                mainActivity.updateTextHighScore("highscore: " + highscore.toString())
+            }
+        }
+        /*
         if ((surviveball.posX < (player1.left + player1.right)) && ((surviveball.posX + surviveball.size) > player1.left) &&
             (surviveball.posY < player1.top + player1.playerHeight) && ((surviveball.posY + surviveball.size) > player1.top)
         ) {
@@ -82,11 +107,18 @@ class GameMode2 (context: Context): SurfaceView(context), SurfaceHolder.Callback
             surviveball.speedX += 1
             surviveball.speedY += 1
 
-        }
+            if (score > highscore) {
+                highscore = score
+                surviveball.updateHighscore(highscore)
+                mainActivity.updateTextHighScore(highscore.toString())
+            }
 
+
+        }
+*/
     }
 
-    fun draw(){
+    fun draw() {
         canvas = mHolder!!.lockCanvas()
         canvas.drawColor(Color.BLUE)
         surviveball.draw(canvas)
@@ -102,12 +134,10 @@ class GameMode2 (context: Context): SurfaceView(context), SurfaceHolder.Callback
     }
 
 
-    private fun bounceBall(b1: BallForGameMode2){
+    private fun bounceBall(b1: BallForGameMode2) {
         b1.speedY *= -1
         surviveball.paint.color = Color.YELLOW
     }
-
-
 
 
     override fun surfaceCreated(p0: SurfaceHolder) {
@@ -115,7 +145,7 @@ class GameMode2 (context: Context): SurfaceView(context), SurfaceHolder.Callback
     }
 
     override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {
-        bounds = Rect(0,0,screenWidth,screenHeight)
+        bounds = Rect(0, 0, width, height)
         start()
     }
 
@@ -125,12 +155,11 @@ class GameMode2 (context: Context): SurfaceView(context), SurfaceHolder.Callback
     }
 
     override fun run() {
-        while(running){
+        while (running) {
             update()
             draw()
             surviveball.checkBounds(bounds)
             surviveball.lose()
-
         }
     }
 }

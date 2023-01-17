@@ -38,23 +38,24 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         setup()
     }
 
+    //initializes the game objects such as ball, player1 and player2, and sets their color.
     fun setup(){
         ball1 = Ball(100f, 100f, 35f, 15f, 15f,this.context)
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
-        player2 = Player2(300f, 1795f, 500f, 14f, 1f, 30f)
+        player2 = Player2(300f, 1795f, 500f, 14f, 0f, 30f)
 
         ball1.paint.color = Color.WHITE
         player1.paint.color = Color.RED
         player2.paint.color = Color.GREEN
     }
 
-
+    //starts a new thread for the game loop, where the game objects are updated and drawn on the screen
     fun start(){
         running = true
         thread = Thread(this)
         thread?.start()
     }
-
+    //method stops the game loop and ends the thread
     fun stop(){
         running = false
         try{
@@ -64,6 +65,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         }
     }
 
+    //updates the position of the game objects based on their speed and direction
     fun update(){
         ball1.update()
         player1.update(playerX)
@@ -80,6 +82,8 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         ) {
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
+            ball1.speedX += 2
+            ball1.speedY += 2
         }
 
 
@@ -91,6 +95,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         ) {
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
+            ball1.speedX += 2
         }
 
         if (ball1.posX > player2.left) {
@@ -106,6 +111,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
 
     }
 
+    //draw the game objects on the screen
     fun draw(){
         canvas = mHolder!!.lockCanvas()
         canvas.drawColor(Color.BLACK)
@@ -115,6 +121,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         mHolder!!.unlockCanvasAndPost(canvas)
     }
 
+    //Moving the raquete and starts the ball again
     override fun onTouchEvent(event: MotionEvent?): Boolean {
 
         ball1.startMoving()
@@ -138,11 +145,12 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         start()
     }
 
-
+    //Stops the game
     override fun surfaceDestroyed(p0: SurfaceHolder) {
         stop()
     }
 
+    //while the game runs
     override fun run() {
         while(running){
             update()
