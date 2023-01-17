@@ -11,6 +11,7 @@
         android:id="@+id/textView2"
         android:layout_width="299dp"
         android:layout_height="97dp"
+        android:fontFamily="@font/bungee_shade"
         android:gravity="center"
         android:shadowColor="@color/cardview_light_background"
         android:text="Smooth Fighters"
@@ -22,12 +23,13 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.094" />
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/play_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/black"
-        android:textSize="20sp"
+        android:fontFamily="@font/bungee_shade"
+        android:textSize="25sp"
         android:text="Start"
         android:textColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -38,14 +40,15 @@
         app:layout_constraintVertical_bias="0.374" />
 
 
-    <Button
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/play_gamemode2_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/black"
         android:text="Game mode2 "
         android:textColor="@color/white"
-        android:textSize="20sp"
+        android:fontFamily="@font/bungee_shade"
+        android:textSize="25sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.497"
