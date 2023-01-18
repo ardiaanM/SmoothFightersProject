@@ -42,7 +42,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     fun setup(){
         ball1 = Ball(100f, 100f, 35f, 15f, 15f,this.context)
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
-        player2 = Player2(300f, 1795f, 500f, 14f, 0f, 30f)
+        player2 = Player2(300f, 1920f, 500f, 15f, 1f, 10f)
 
         ball1.paint.color = Color.WHITE
         player1.paint.color = Color.RED
@@ -98,7 +98,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
             ball1.speedX += 2
         }
 
-        if (ball1.posX > player2.left) {
+        if (ball1.posX > player2.right) {
             player2.left += player2.speedX
             player2.right += player2.speedX
 

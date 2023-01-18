@@ -4,6 +4,11 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/SmoothFightersProject7/app/src/main/res/layout/activity_start_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/SmoothFightersProject8/app/src/main/res/layout/activity_game_mode2.xml" value="0.36666666666666664" />
+        <entry key="..\:/SmoothFightersProject8/app/src/main/res/layout/activity_main.xml" value="0.25" />
+        <entry key="..\:/SmoothFightersProject8/app/src/main/res/layout/activity_start_menu.xml" value="0.36666666666666664" />
+        <entry key="..\:/SmoothFightersProject8/app/src/main/res/layout/fragment_game_survive.xml" value="0.36666666666666664" />
+        <entry key="..\:/SmoothFightersProject8/app/src/main/res/layout/fragment_gamefragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/ardia/AndroidStudioProjects/SmoothFightersProject/app/src/main/res/layout/activity_main.xml" value="0.30434782608695654" />
         <entry key="..\:/Users/ardia/AndroidStudioProjects/SmoothFightersProject/app/src/main/res/layout/activity_start_menu.xml" value="0.358695652173913" />
         <entry key="..\:/Users/ardia/AndroidStudioProjects/SmoothFightersProject/app/src/main/res/layout/fragment_gamefragment.xml" value="0.14722222222222223" />

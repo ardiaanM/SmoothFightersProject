@@ -43,7 +43,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="120dp"
-        android:text="Highscore: 0"
         android:textColor="#000000"
         android:textSize="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
