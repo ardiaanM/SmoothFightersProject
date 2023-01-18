@@ -15,7 +15,7 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
     private var running = false
     lateinit var canvas: Canvas
     private lateinit var surviveball: BallForGameMode2
-    private lateinit var player1: Player1
+    private lateinit var playerGame2: PlayerGame2
     private var bounds = Rect()
     var mainActivity = context as MainActivity
     var mHolder: SurfaceHolder? = holder
@@ -37,11 +37,11 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
 
     fun setup() {
         surviveball = BallForGameMode2(100f, 100f, 35f, 15f, 15f, this.context)
-        player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
+        playerGame2 = PlayerGame2 (30f, 2030f, 5f, 20f, 0f, 30f)
 
 
         surviveball.paint.color = Color.BLACK
-        player1.paint.color = Color.RED
+        playerGame2.paint.color = Color.RED
         highscore = surviveball.retrieveHighscore()
         if (highscore == null) {
             mainActivity.updateTextHighScore("0")
@@ -68,16 +68,16 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
 
     fun update() {
         surviveball.update()
-        player1.update(playerX)
+        playerGame2.update(playerX)
 
         //debug
         println("Ball position: (${surviveball.posX}, ${surviveball.posY})")
-        println("Player 1 position: (${player1.left}, ${player1.top})")
+        println("Player 1 position: (${playerGame2.left}, ${playerGame2.top})")
 
 
         // Check for collisions with player 1
-        if ((surviveball.posX > player1.left) && (surviveball.posX < player1.right) &&
-            (surviveball.posY < player1.top + player1.playerHeight) && ((surviveball.posY + surviveball.size) > player1.top)
+        if ((surviveball.posX > playerGame2.left) && (surviveball.posX < playerGame2.right) &&
+            (surviveball.posY < playerGame2.top + playerGame2.playerHeight) && ((surviveball.posY + surviveball.size) > playerGame2.top)
         ) {
             // Calculate new direction of the ball
             surviveball.speedY = -surviveball.speedY
@@ -122,7 +122,7 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
         canvas = mHolder!!.lockCanvas()
         canvas.drawColor(Color.BLUE)
         surviveball.draw(canvas)
-        player1.draw(canvas)
+        playerGame2.draw(canvas)
         mHolder!!.unlockCanvasAndPost(canvas)
     }
 

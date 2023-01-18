@@ -80,15 +80,13 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         if ((ball1.posX > player1.left) && (ball1.posX < player1.right) &&
             (ball1.posY < player1.top + player1.playerHeight) && ((ball1.posY + ball1.size) > player1.top)
         ) {
+
+            
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
             ball1.speedX += 2
             ball1.speedY += 2
         }
-
-
-
-
         // Check for collisions with player 2
         if ((ball1.posX < (player2.left + player2.right)) && ((ball1.posX + ball1.size) > player2.left) &&
             (ball1.posY < player2.top + player2.playerHeight) && ((ball1.posY + ball1.size) > player2.top)
