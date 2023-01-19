@@ -37,10 +37,10 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
 
     fun setup() {
         surviveball = BallForGameMode2(100f, 100f, 35f, 15f, 15f, this.context)
-        playerGame2 = PlayerGame2 (30f, 2030f, 5f, 20f, 0f, 30f)
+        playerGame2 = PlayerGame2 (30f, 1930f, 5f, 20f)
 
 
-        surviveball.paint.color = Color.BLACK
+        surviveball.paint.color = Color.WHITE
         playerGame2.paint.color = Color.RED
         highscore = surviveball.retrieveHighscore()
         if (highscore == null) {
@@ -81,12 +81,13 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
         ) {
             // Calculate new direction of the ball
             surviveball.speedY = -surviveball.speedY
+            surviveball.speedX ++
+            surviveball.speedY ++
 
             score++
             mainActivity.updateText("Score: " + "$score")
 
-            surviveball.speedX += 1
-            surviveball.speedY += 1
+
 
             if (score > highscore) {
                 highscore = score
@@ -120,7 +121,7 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
 
     fun draw() {
         canvas = mHolder!!.lockCanvas()
-        canvas.drawColor(Color.BLUE)
+        canvas.drawColor(Color.BLACK)
         surviveball.draw(canvas)
         playerGame2.draw(canvas)
         mHolder!!.unlockCanvasAndPost(canvas)
@@ -131,12 +132,6 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
         surviveball.startMoving()
         playerX = event!!.x
         return true
-    }
-
-
-    private fun bounceBall(b1: BallForGameMode2) {
-        b1.speedY *= -1
-        surviveball.paint.color = Color.YELLOW
     }
 
 

@@ -29,8 +29,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     var screenHeight = displayMetrics.heightPixels
     var screenWidth = displayMetrics.widthPixels
 
-
-
+    
     init {
         if(mHolder != null){
             mHolder?.addCallback(this)
@@ -125,12 +124,6 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         ball1.startMoving()
         playerX = event!!.x
         return true
-    }
-
-
-    private fun bounceBall(b1: Ball){
-        b1.speedY *= -1
-        ball1.paint.color = Color.YELLOW
     }
 
 
