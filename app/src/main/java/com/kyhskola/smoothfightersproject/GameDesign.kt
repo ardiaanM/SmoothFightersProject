@@ -19,17 +19,16 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     private lateinit var player2: Player2
     private var bounds = Rect()
     var mainActivity = context as MainActivity
-    var score = 0
     var mHolder: SurfaceHolder? = holder
     var playerX = 0f
-    var playerX2 = 1f
 
 
     var displayMetrics: DisplayMetrics = context.resources.displayMetrics
     var screenHeight = displayMetrics.heightPixels
     var screenWidth = displayMetrics.widthPixels
 
-    
+
+
     init {
         if(mHolder != null){
             mHolder?.addCallback(this)
@@ -39,13 +38,13 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
 
     //initializes the game objects such as ball, player1 and player2, and sets their color.
     fun setup(){
-        ball1 = Ball(100f, 100f, 35f, 15f, 15f,this.context)
+        ball1 = Ball(100f, 100f, 35f, 10f, 10f,this.context)
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
-        player2 = Player2(300f, 1920f, 500f, 15f, 1f, 10f)
+        player2 = Player2(300f, 1920f, 500f, 14f, 0f, 30f)
 
         ball1.paint.color = Color.WHITE
-        player1.paint.color = Color.RED
-        player2.paint.color = Color.GREEN
+        player1.paint.color = Color.GREEN
+        player2.paint.color = Color.RED
     }
 
     //starts a new thread for the game loop, where the game objects are updated and drawn on the screen
@@ -79,13 +78,15 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
         if ((ball1.posX > player1.left) && (ball1.posX < player1.right) &&
             (ball1.posY < player1.top + player1.playerHeight) && ((ball1.posY + ball1.size) > player1.top)
         ) {
-
-            
             // Calculate new direction of the ball
             ball1.speedY = -ball1.speedY
             ball1.speedX += 2
             ball1.speedY += 2
         }
+
+
+
+
         // Check for collisions with player 2
         if ((ball1.posX < (player2.left + player2.right)) && ((ball1.posX + ball1.size) > player2.left) &&
             (ball1.posY < player2.top + player2.playerHeight) && ((ball1.posY + ball1.size) > player2.top)

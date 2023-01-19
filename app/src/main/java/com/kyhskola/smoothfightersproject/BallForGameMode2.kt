@@ -45,16 +45,16 @@ class BallForGameMode2(
             this.speedX *= -1
         }
         if (posY - size < bounds.top) {
-            this.speedY *= -1
-        }
-        if (posY + size > bounds.bottom) {
             this.posY = screenHeight/2f
             this.posX = screenWidth/2f
-            this.speedX = 0F
-            this.speedY= 0F
+            this.speedX *= 0
+            this.speedY *= 0
 
             lives -= 1
             mainActivity.updateTextLives(lives.toString())
+        }
+        if (posY + size > bounds.bottom) {
+            this.speedY *= -1
         }
 
 

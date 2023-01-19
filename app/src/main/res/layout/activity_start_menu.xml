@@ -24,7 +24,7 @@
         app:layout_constraintVertical_bias="0.094" />
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/play_button"
+        android:id="@+id/play_pong_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/black"
@@ -41,7 +41,7 @@
 
 
     <androidx.appcompat.widget.AppCompatButton
-        android:id="@+id/play_gamemode2_button"
+        android:id="@+id/play_surviveball_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@color/black"

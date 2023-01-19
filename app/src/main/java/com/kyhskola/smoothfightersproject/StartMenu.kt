@@ -13,14 +13,14 @@ class StartMenu : AppCompatActivity() {
 
         val highscore = intent.getIntExtra("highscore", 0)
 
-        val playButton = findViewById<Button>(R.id.play_button)
+        val playButton = findViewById<Button>(R.id.play_pong_button)
         playButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("game_mode", 1)
             startActivity(intent)
         }
 
-        val secondGameMode = findViewById<Button>(R.id.play_gamemode2_button)
+        val secondGameMode = findViewById<Button>(R.id.play_surviveball_button)
         secondGameMode.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             intent.putExtra("game_mode", 2)
