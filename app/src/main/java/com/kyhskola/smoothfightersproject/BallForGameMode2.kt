@@ -27,6 +27,7 @@ class BallForGameMode2(
     var screenWidth = displayMetrics.widthPixels
     var mContext = context
 
+    //Makes the ball move left and right, up, down
     fun update() {
         posX += speedX
         posY += speedY
@@ -51,7 +52,7 @@ class BallForGameMode2(
             this.speedY *= 0
 
             lives -= 1
-            mainActivity.updateTextLives(lives.toString())
+            mainActivity.updateTextLives("Lives: "+lives.toString())
         }
         if (posY + size > bounds.bottom) {
             this.speedY *= -1
@@ -71,8 +72,8 @@ class BallForGameMode2(
     }
 
     fun lose(){
-        if (lives == 0){
-            mainActivity.updateText("GAME OVER")
+        if (lives <= 0){
+            mainActivity.updateText("Please wait..")
             mainActivity.updateTextUpper("GAME OVER")
             retrieveHighscore()
             val intent = Intent(mainActivity, StartMenu::class.java)

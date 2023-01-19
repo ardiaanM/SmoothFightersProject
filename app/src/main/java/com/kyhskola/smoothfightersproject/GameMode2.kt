@@ -23,11 +23,11 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
     var score = 0
     var highscore = 0
 
-    var displayMetrics = context.resources.displayMetrics
-    var screenHeight = displayMetrics.heightPixels
-    var screenWidth = displayMetrics.widthPixels
+    //var displayMetrics = context.resources.displayMetrics
+    //var screenHeight = displayMetrics.heightPixels
+    //var screenWidth = displayMetrics.widthPixels
 
-
+    //Creating the game surface
     init {
         if (mHolder != null) {
             mHolder?.addCallback(this)
@@ -35,6 +35,7 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
         setup()
     }
 
+    //Creating objects for the game
     fun setup() {
         surviveball = BallForGameMode2(100f, 100f, 35f, 15f, 15f, this.context)
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
@@ -50,13 +51,16 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
         }
     }
 
+    //Failsafe
+    //Starts the game loop
     fun start() {
         running = true
         thread = Thread(this)
         thread?.start()
-        mainActivity.updateTextLives("3")
+        mainActivity.updateTextLives("Lives: 3")
     }
-
+    //Failsafe
+    //Stops the game loop, join will wait for start to finnsh
     fun stop() {
         running = false
         try {
@@ -66,8 +70,11 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
         }
     }
 
+
     fun update() {
+        //Makes the ball move left and right, up, down
         surviveball.update()
+        //Makes the paddle move left and right
         player1.update(playerX)
 
         //debug
@@ -94,25 +101,9 @@ class GameMode2(context: Context) : SurfaceView(context), SurfaceHolder.Callback
                 mainActivity.updateTextHighScore("Top Score : " + highscore.toString())
             }
         }
-        /*
-        if ((surviveball.posX < (player1.left + player1.right)) && ((surviveball.posX + surviveball.size) > player1.left) &&
-            (surviveball.posY < player1.top + player1.playerHeight) && ((surviveball.posY + surviveball.size) > player1.top)
-        ) {
-            // Calculate new direction of the ball
-            surviveball.speedY = -surviveball.speedY
-            score++
-            mainActivity.updateText("$score")
-            surviveball.speedX += 1
-            surviveball.speedY += 1
-            if (score > highscore) {
-                highscore = score
-                surviveball.updateHighscore(highscore)
-                mainActivity.updateTextHighScore(highscore.toString())
-            }
-        }
-*/
     }
 
+    //Paints up the game objects
     fun draw() {
         canvas = mHolder!!.lockCanvas()
         canvas.drawColor(Color.DKGRAY)

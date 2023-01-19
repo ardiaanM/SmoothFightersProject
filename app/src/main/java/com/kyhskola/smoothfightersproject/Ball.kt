@@ -19,7 +19,7 @@ class Ball(
     var speedY: Float,
     context: Context
 ) {
-
+    //Declaring variables
     var displayMetrics: DisplayMetrics = context.resources.displayMetrics
     var screenHeight = displayMetrics.heightPixels
     var screenWidth = displayMetrics.widthPixels
@@ -28,12 +28,14 @@ class Ball(
     var scoreLower = 0
     var scoreUpper = 0
 
+    //Updating the ball position
     fun update() {
         posX += speedX
         posY += speedY
 
     }
 
+    //Making the ball
     fun draw(canvas: Canvas?) {
         canvas?.drawCircle(posX, posY, size, paint)
     }
@@ -69,12 +71,13 @@ class Ball(
     }
 
 
+    //Starts the ball again when someone scores at random speed
     fun startMoving() {
         if (speedX == 0f && speedY == 0f) {
             // Set ball's x-speed to a random value between -5 and 5
-            speedX = (Math.random().toFloat() * 15f) - (-5f)
+            speedX = 10f
             // Set ball's y-speed to a random value between -5 and 5
-            speedY = (Math.random().toFloat() * 10f) - (-5f)
+            speedY = (Math.random().toFloat() * 15f) - (-10f)
         }
     }
 

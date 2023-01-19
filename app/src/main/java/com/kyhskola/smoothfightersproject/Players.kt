@@ -13,6 +13,7 @@ class Player1(left: Float, top: Float, right: Float, speedX: Float, speedY: Floa
         canvas?.drawRect(left, top, right, 0f, paint)
     }
 
+    //Makes the paddle move left and right
     fun update(pos: Float) {
         left = pos - 100
         right = pos + 100

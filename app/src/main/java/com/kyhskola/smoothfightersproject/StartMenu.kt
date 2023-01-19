@@ -11,8 +11,7 @@ class StartMenu : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_start_menu)
 
-        val highscore = intent.getIntExtra("highscore", 0)
-
+        //if u press the "Pong" button
         val playButton = findViewById<Button>(R.id.play_pong_button)
         playButton.setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)

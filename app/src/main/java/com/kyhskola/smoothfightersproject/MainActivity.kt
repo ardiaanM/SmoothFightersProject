@@ -8,12 +8,8 @@ import androidx.fragment.app.commit
 import com.kyhskola.smoothfightersproject.databinding.ActivityMainBinding
 
 // Github: https://github.com/ardiaanM/SmoothFightersProject
-
-
 class MainActivity : AppCompatActivity() {
-
     private lateinit var binding: ActivityMainBinding
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
@@ -36,29 +32,29 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    fun updateText(str: String){
+    fun updateText(str: String) {
         runOnUiThread(Runnable {
             binding.textView.text = str
         })
-
     }
 
-    fun updateTextUpper(str: String){
+    fun updateTextUpper(str: String) {
+        runOnUiThread(Runnable {
+            binding.textViewUpper.text = str
+        })
+    }
+
+    fun updateTextLives(str: String) {
         runOnUiThread(Runnable {
             binding.textViewUpper.text = str
         })
 
     }
 
-    fun updateTextLives(str: String){
-        runOnUiThread(Runnable {
-            binding.textViewUpper.text = str
-        })
-
-    }
 
     fun updateTextHighScore(str: String) {
         runOnUiThread(Runnable {
+            binding.textView.text
             binding.textViewHighScore.text = str
 
         })

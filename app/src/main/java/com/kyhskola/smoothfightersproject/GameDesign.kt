@@ -23,12 +23,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     var playerX = 0f
 
 
-    var displayMetrics: DisplayMetrics = context.resources.displayMetrics
-    var screenHeight = displayMetrics.heightPixels
-    var screenWidth = displayMetrics.widthPixels
-
-
-
+    //Creates the game surface
     init {
         if(mHolder != null){
             mHolder?.addCallback(this)
@@ -40,7 +35,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     fun setup(){
         ball1 = Ball(100f, 100f, 35f, 10f, 10f,this.context)
         player1 = Player1(30f, 30f, 5f, 20f, 0f, 30f)
-        player2 = Player2(300f, 1920f, 500f, 14f, 0f, 30f)
+        player2 = Player2(300f, 1920f, 500f, 10f, 0f, 30f)
 
         ball1.paint.color = Color.WHITE
         player1.paint.color = Color.GREEN
@@ -96,6 +91,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
             ball1.speedX += 2
         }
 
+        //AI - moves the paddle
         if (ball1.posX > player2.right) {
             player2.left += player2.speedX
             player2.right += player2.speedX
@@ -133,7 +129,7 @@ class GameDesign (context: Context): SurfaceView(context), SurfaceHolder.Callbac
     }
 
     override fun surfaceChanged(p0: SurfaceHolder, p1: Int, p2: Int, p3: Int) {
-        bounds = Rect(0,0,screenWidth,screenHeight)
+        bounds = Rect(0,0,width,height)
         start()
     }
 
